@@ -1,14 +1,14 @@
-#import RPi.GPIO as GPIO
+import RPi.GPIO as GPIO
 import time
 
 SPEED_OF_SOUND = 34300
 WAIT_TIMEOUT = 0.04
-'''
+
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(14, GPIO.OUT)  # TRIG
 GPIO.setup(15, GPIO.IN)   # ECHO
-'''
+
 class SlidingWindow:
     '''
     This class will take in the instantaneous values provided by the ultrasonic sensor
@@ -34,7 +34,7 @@ class SlidingWindow:
         return sum(self.window) / len(self.window)
 
 sliding_window = SlidingWindow(size=5)
-'''
+
 def measure_distance():
     # GPIO 14 is connected to TRIG and GPIO15 to ECHO
     # we initiate a measurement by setting the TRIG input to 
@@ -68,4 +68,3 @@ def get_smoothed_distance():
         return sliding_window(d)
     return None
 
-    '''
