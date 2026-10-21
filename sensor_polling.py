@@ -65,6 +65,19 @@ def get_smoothed_distance():
     d = measure_distance()
 
     if d is not None:
-        return sliding_window(d)
+        smoothed = sliding_window.update(d)
+        print(f"Distance: {d:.2f} cm")
+        print(f"Smoothed distance: {smoothed:.2f} cm")
+        return smoothed
     return None
 
+try:
+    while True:
+        get_smoothed_distance()
+        time.sleep(0.1)
+
+except KeyboardInterrupt:
+    print("Program stopped.")
+
+finally:
+    GPIO.cleanup()
