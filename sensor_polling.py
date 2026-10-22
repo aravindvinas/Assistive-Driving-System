@@ -6,8 +6,8 @@ WAIT_TIMEOUT = 0.04
 
 
 GPIO.setmode(GPIO.BCM)
-GPIO.setup(14, GPIO.OUT)  # TRIG
-GPIO.setup(15, GPIO.IN)   # ECHO
+GPIO.setup(24, GPIO.OUT)  # TRIG
+GPIO.setup(23, GPIO.IN)   # ECHO
 
 class SlidingWindow:
     '''
@@ -36,21 +36,21 @@ class SlidingWindow:
 sliding_window = SlidingWindow(size=5)
 
 def measure_distance():
-    # GPIO 14 is connected to TRIG and GPIO15 to ECHO
+    # GPIO 24 is connected to TRIG and GPIO23 to ECHO
     # we initiate a measurement by setting the TRIG input to 
     # high for at least 10 microseconds
-    GPIO.output(14, GPIO.HIGH) # set to high
+    GPIO.output(24, GPIO.HIGH) # set to high
     time.sleep(0.00001)  # wait for at least 10 microseconds, rPi might take more time but that is fine
-    GPIO.output(14, GPIO.LOW) # end pulse
+    GPIO.output(24, GPIO.LOW) # end pulse
 
     timeout = time.time() + WAIT_TIMEOUT # The sensor should wait for a HIGH signal for WAIT_TIMEOUT(arbitrary) seconds before continuing
-    while GPIO.input(15) == 0:
+    while GPIO.input(23) == 0:
         start_time = time.time()
         if start_time > timeout:
             return None
 
     timeout = time.time() + WAIT_TIMEOUT # The sensor should wait for a LOW signal for WAIT_TIMEOUT(arbitrary) seconds and then continue
-    while GPIO.input(15) == 1:
+    while GPIO.input(23) == 1:
         end_time = time.time()
         if end_time > timeout:
             return None
