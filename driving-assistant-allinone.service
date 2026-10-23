@@ -1,0 +1,16 @@
+[Unit]
+Description=Driving Assistant Sensor, Buzzer and Phone Dashboard
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/home/driver
+ExecStart=/usr/bin/python3 /home/driver/driving_assistant_allinone.py
+Restart=always
+RestartSec=3
+Environment=PYTHONUNBUFFERED=1
+
+[Install]
+WantedBy=multi-user.target
