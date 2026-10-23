@@ -4,6 +4,8 @@ import time
 SPEED_OF_SOUND = 34300
 WAIT_TIMEOUT = 0.04
 
+MIN = 2
+MAX = 16
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(24, GPIO.OUT)  # TRIG
@@ -71,9 +73,17 @@ def get_smoothed_distance():
         return smoothed
     return None
 
+def get_depth(smoothed_distance):
+    if smoothed_distance is not None:
+        depth = (smoothed_distance - MIN) / (MAX - MIN) * 100
+        print(f"Depth: {depth:.2f}%")
+        return depth
+    return None
+
 try:
     while True:
-        get_smoothed_distance()
+        smoothed_distance = get_smoothed_distance()
+        get_depth(smoothed_distance)
         time.sleep(0.1)
 
 except KeyboardInterrupt:
